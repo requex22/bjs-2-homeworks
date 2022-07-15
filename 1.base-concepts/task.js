@@ -16,9 +16,11 @@ function solveEquation(a, b, c) {
   } else if (discriminant === 0) {
 	arr[0] = -b / (2 * a);
   }
-  
+
   return arr; // array
 }
+
+console.log(solveEquation(2, 2, 1));
 
 function calculateTotalMortgage(percent, contribution, amount, date) {
   let totalAmount;
