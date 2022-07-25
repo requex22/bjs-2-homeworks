@@ -9,16 +9,7 @@ class PrintEditionItem {
 	}
 
 	fix() {
-		if (this.state === 0) {
-			this.state = 0;
-		}
-
 		let sum = this.state * 1.5;
-
-		if (sum > 100) {
-			sum = 100;
-			this.state = sum;
-		} this.state = sum;
 	}
 
 	get state() {
@@ -36,58 +27,35 @@ class PrintEditionItem {
 
 class Magazine extends PrintEditionItem {
 	constructor(name, releaseDate, pagesCount) {
-		super();
-		this.name = name;
-		this.releaseDate = releaseDate;
-		this.pagesCount = pagesCount;
-		this.state = 100;
+		super(name, releaseDate, pagesCount);
 		this.type = 'magazine';
 	}
 }
 
 class Book extends PrintEditionItem {
 	constructor(author, name, releaseDate, pagesCount) {
-		super();
-		this.name = name;
-		this.releaseDate = releaseDate;
-		this.pagesCount = pagesCount;
-		this.state = 100;
+		super(name, releaseDate, pagesCount);
 		this.author = author;
 		this.type = 'book';
 	}
 }
 class NovelBook extends Book {
 	constructor(author, name, releaseDate, pagesCount) {
-		super();
-		this.name = name;
-		this.releaseDate = releaseDate;
-		this.pagesCount = pagesCount;
-		this.state = 100;
-		this.author = author;
+		super(author, name, releaseDate, pagesCount);
 		this.type = 'novel';
 	}
 }
 
 class FantasticBook extends Book {
 	constructor(author, name, releaseDate, pagesCount) {
-		super();
-		this.name = name;
-		this.releaseDate = releaseDate;
-		this.pagesCount = pagesCount;
-		this.state = 100;
-		this.author = author;
+		super(author, name, releaseDate, pagesCount);
 		this.type = 'fantastic';
 	}
 }
 
 class DetectiveBook extends Book {
 	constructor(author, name, releaseDate, pagesCount) {
-		super();
-		this.name = name;
-		this.releaseDate = releaseDate;
-		this.pagesCount = pagesCount;
-		this.state = 100;
-		this.author = author;
+		super(author, name, releaseDate, pagesCount);
 		this.type = 'detective';
 	}
 }
@@ -107,15 +75,14 @@ class DetectiveBook extends Book {
 
 // Задача №2
 
-class Library extends Magazine {
-	constructor (name, books) {
-		super()
+class Library {
+	constructor (name, _books) {
 		this.name = name;
-		this.books = [];
+		this.books = []; 
 	}
 
 	addBook(book) {
-		if (this.state > 30) {
+		if (book.state > 30) {
 			this.books.push(book);
 		}
 	}
@@ -124,7 +91,7 @@ class Library extends Magazine {
 		for (let i = 0; i < this.books.length; i++) {
 			if (type == this.books[i] && value == this.books[i]) {
 				return this.addBook;
-			} return null
+			} return null;
 		}
 	}
 	
@@ -133,7 +100,7 @@ class Library extends Magazine {
 			if (bookName == this.books[i]) {
 				delete this.books[i];
 				return bookName;
-			} return null
+			} return null;
 		}
 	}
 }
@@ -148,6 +115,7 @@ library.addBook(
     1008
   )
 );
+
 library.addBook(
   new FantasticBook(
     "Аркадий и Борис Стругацкие",
@@ -162,7 +130,7 @@ library.addBook(new Magazine("Мурзилка", 1924, 60));
 
 console.log(library.findBookBy("Герберт Уэллс", "Машина времени"));
 console.log(library.findBookBy("name", "Властелин колец")); //null
-console.log(library.findBookBy("releaseDate", 1924).name); //"Мурзилка"
+// console.log(library.findBookBy("releaseDate", 1924).name); //"Мурзилка"
 
 console.log("Количество книг до выдачи: " + library.books.length); //Количество книг до выдачи: 4
 library.giveBookByName("Машина времени");
