@@ -9,7 +9,7 @@ class PrintEditionItem {
 	}
 
 	fix() {
-		let sum = this.state * 1.5;
+		this.state *= 1.5;
 	}
 
 	get state() {
@@ -89,17 +89,17 @@ class Library {
 
 	findBookBy(type, value) {
 		for (let i = 0; i < this.books.length; i++) {
-			if (type == this.books[i] && value == this.books[i]) {
-				return this.addBook;
+			if (this.books[i][type] === value) {
+				return this.book;
 			} return null;
 		}
 	}
 	
 	giveBookByName(bookName) {
 		for (let i = 0; i < this.books.length; i++) {
-			if (bookName == this.books[i]) {
-				delete this.books[i];
-				return bookName;
+			if (this.books[i] === bookName) {
+				this.books.splice([bookName]);
+				return bookName;	
 			} return null;
 		}
 	}
@@ -128,9 +128,9 @@ library.addBook(
 library.addBook(new NovelBook("Герберт Уэллс", "Машина времени", 1895, 138));
 library.addBook(new Magazine("Мурзилка", 1924, 60));
 
-console.log(library.findBookBy("Герберт Уэллс", "Машина времени"));
+console.log(library.findBookBy( "Аркадий и Борис Стругацкие", "Пикник на обочине"));
 console.log(library.findBookBy("name", "Властелин колец")); //null
-// console.log(library.findBookBy("releaseDate", 1924).name); //"Мурзилка"
+console.log(library.findBookBy("releaseDate", 1924).name); //"Мурзилка"
 
 console.log("Количество книг до выдачи: " + library.books.length); //Количество книг до выдачи: 4
 library.giveBookByName("Машина времени");

@@ -3,14 +3,16 @@ function parseCount(value) {
 	let number = Number.parseInt(value, 10);
 	if (Number.isNaN(number)) {
 		throw new Error('Невалидное значение');
-	} return number;
+	} else {
+		return number;
+	}
 }
 
 function validateCount(value) {
 	try {
 		return parseCount(value);
 	} catch(error) {
-		console.log(error);
+		return error;
 	}
 }
 
@@ -23,18 +25,17 @@ class Triangle {
 		this.a = a;
 		this.b = b;
 		this.c = c;
-		if (this.a > this.b + this.c || this.b > this.a + this.c || this.c > this.a + this.b) {
+		if (a > b + c || b > a + c || c > a + b) {
 			throw new Error('Треугольник с такими сторонами не существует');
 		}
 	}
 
 	getPerimetr() {
-		this.p = (this.a + this.b + this.c);
-		return this.p;
+		return this.p = (this.a + this.b + this.c);
 	}
 
 	getArea() {
-		this.p = (this.a + this.b + this.c) / 2;
+		this.p = this.p / 2;
 		return Math.round((this.p * (this.p - this.a) * (this.p - this.b) * (this.p - this.c)) ** 0.5);
 	}
 }
@@ -43,20 +44,14 @@ function getTriangle(a, b, c) {
 	try {
 		return new Triangle(a, b, c);
 	} catch(error) {
-		return new Triangle(a, b, c) = {
-			getPerimetr() {
-				return console.log('Ошибка! Треугольник не существует');
-			},
-			
-			getArea() {
-				return console.log('Ошибка! Треугольник не существует');
-			}
+		return {
+			getArea: () => "Ошибка! Треугольник не существует",
+			getPerimeter: () => "Ошибка! Треугольник не существует"
 		}
-	}	
+	}
 }
 
 let triangle = new Triangle(4, 4, 4);
 console.log(triangle.getPerimetr());
 console.log(triangle.getArea());
-// let triangle1 = new Triangle(4, 4, 4);
-console.log(getTriangle(1, 2, 1))
+console.log(getTriangle(100, 5, 5))
