@@ -30,13 +30,13 @@ class Triangle {
 		}
 	}
 
-	getPerimetr() {
-		return this.p = (this.a + this.b + this.c);
+	getPerimeter() {
+		return this.a + this.b + this.c;
 	}
 
 	getArea() {
-		this.p = this.p / 2;
-		return Math.round((this.p * (this.p - this.a) * (this.p - this.b) * (this.p - this.c)) ** 0.5);
+		const value = this.getPerimeter() / 2;
+		return Math.round((value * (value - this.a) * (value - this.b) * (value - this.c)) ** 0.5);
 	}
 }
 
@@ -52,6 +52,6 @@ function getTriangle(a, b, c) {
 }
 
 let triangle = new Triangle(4, 4, 4);
-console.log(triangle.getPerimetr());
+// console.log(triangle.getPerimeter());
 console.log(triangle.getArea());
 console.log(getTriangle(100, 5, 5))
