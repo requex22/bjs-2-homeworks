@@ -90,18 +90,22 @@ class Library {
 	findBookBy(type, value) {
 		for (let i = 0; i < this.books.length; i++) {
 			if (this.books[i][type] === value) {
-				return this.book;
-			} return null;
+				return this.books[i];
+			}
 		}
+
+		return null;
 	}
 	
 	giveBookByName(bookName) {
 		for (let i = 0; i < this.books.length; i++) {
-			if (this.books[i] === bookName) {
-				this.books.splice([bookName]);
-				return bookName;	
-			} return null;
+			if (this.books[i].name === bookName) {
+				this.books.splice(i);
+				return this.books[i];	
+			}
 		}
+
+		return null;
 	}
 }
 
@@ -128,7 +132,6 @@ library.addBook(
 library.addBook(new NovelBook("Герберт Уэллс", "Машина времени", 1895, 138));
 library.addBook(new Magazine("Мурзилка", 1924, 60));
 
-console.log(library.findBookBy( "Аркадий и Борис Стругацкие", "Пикник на обочине"));
 console.log(library.findBookBy("name", "Властелин колец")); //null
 console.log(library.findBookBy("releaseDate", 1924).name); //"Мурзилка"
 
