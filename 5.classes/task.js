@@ -100,7 +100,8 @@ class Library {
 	giveBookByName(bookName) {
 		for (let i = 0; i < this.books.length; i++) {
 			if (this.books[i].name === bookName) {
-				this.books.splice(i);
+				let deletedBook = this.books[i];
+				this.books.splice(deletedBook, 1);
 				return this.books[i];	
 			}
 		}
