@@ -30,23 +30,21 @@ function cachingDecoratorNew(func) {
 	return wrapper;
 }
 
-
 function debounceDecoratorNew(func) {
 	let timeout;
     let time = Date.now();
 
     return function (...args) {
-    
-        clearTimeout(timeout);
+    	clearTimeout(timeout);
         
         timeout = setTimeout(() => {
             timeout = null;
             func.apply(this, args);
             console.log(Date.now() - time + " мс");
         }, ms);
-
     };
 }
+
 
 // function debounceDecorator2(func) {
 //   // Ваш код
