@@ -1,51 +1,63 @@
 function cachingDecoratorNew(func) {
 	let cache = [];
-
+  
 	function wrapper(...args) {
-		const hash = args.join(","); // получаем правильный хэш
-		console.log(`Принимаем новую порцию хеша: ${hash}`);
-		console.log(`Текущий размер кеша: ${cache.length}`);
+		const hash = args.join(','); 
+		let objectInCache = cache.find((item) => item.hash === hash); // ищем элемент, хэш которого равен нашему хэшу
+		
+		if (objectInCache) { // если элемент не найден
+			console.log("Из кэша: " + objectInCache.value); // индекс нам известен, по индексу в массиве лежит объект, как получить нужное значение?
+			return "Из кэша: " + objectInCache.value;
+		}
+	
+		let result = func(...args); // в кэше результата нет - придётся считать
+		cache.push({hash, value: result}) ; // добавляем элемент с правильной структурой
 
-		let idx = cache.findIndex((item) => item.hash === hash) // ищем элемент, хэш которого равен нашему хэшу
-
-		if (idx == -1 ) { // если элемент НЕ найден
-			console.log(`В кэше результата нет - придётся считать`);
-			let result = func(...args); // в кэше результата нет - придётся считать
-			cache.push({hash, result}); // добавляем элемент с правильной структурой
-			console.log(`Производим вычисление: ${result}`);
-			console.log("Добавляем вычисленный результат в кеш");
-
-			if (cache.length > 5) { 
-				cache.splice(0, 1); // если слишком много элементов в кэше надо удалить самый старый (первый)
-				console.log("Кеш переполнен, удаляем самый старый кеш");
-			}
-
-			return "Вычисляем: " + result; 
+		if (cache.length > 5) { 
+		  cache.shift() // если слишком много элементов в кэше надо удалить самый старый (первый) 
 		}
 
-		console.log(`Найден кеш. Результат из кэша: ${cache[idx].result}`)// индекс нам известен, по индексу в массиве лежит объект, как получить нужное значение?
-		return "Из кэша: " + cache[idx].result;
+		console.log("Вычисляем: " + result);
+		return "Вычисляем: " + result;  
 	}
-	
+
 	return wrapper;
 }
 
 function debounceDecoratorNew(func) {
-	let timeout;
-    let time = Date.now();
-
-    return function (...args) {
-    	clearTimeout(timeout);
-        
-        timeout = setTimeout(() => {
-            timeout = null;
-            func.apply(this, args);
-            console.log(Date.now() - time + " мс");
-        }, ms);
-    };
+    let isImmediate = true;
+    let timeout;
+  
+    return function(...args) {
+      if (isImmediate) {
+        func.apply(this, ...args);
+        isImmediate = false;
+      }
+      clearTimeout(timeout);
+      timeout = setTimeout(() => {
+        func.apply(this, ...args);
+        isImmediate = true;
+      }, interval)
+    }
 }
 
 
-// function debounceDecorator2(func) {
-//   // Ваш код
-// }
+function debounceDecorator2(func) {
+	let isImmediate = true;
+    let timeout;
+    wrapper.count = 0;
+  
+    function wrapper(...args) {
+      wrapper.count++;
+      if (isImmediate) {
+        func.apply(this, ...args);
+        isImmediate = false;
+      }
+      clearTimeout(timeout);
+      timeout = setTimeout(() => {
+        func.apply(this, ...args);
+        isImmediate = true;
+      }, interval)
+    }
+    return wrapper;
+}
